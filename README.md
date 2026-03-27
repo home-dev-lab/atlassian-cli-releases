@@ -13,15 +13,14 @@ No Python, no runtime, no dependencies — just download and run.
 - **Cross-service workflows** — `dashboard`, `link-page`, `pr-transition`, `sprint-report`, `release-notes`
 - **Named profiles** — switch between multiple sites or accounts with `--profile`
 - **OAuth 2.0 (3LO)** — browser-based login with secure PKCE flow and automatic token refresh
-- **Secure credentials** — tokens stored in `~/.atlassian-cli/.env` (permissions 600), never in config
-- **OS Keyring support** — optionally store credentials in your system's encrypted password manager
+- **Secure credential storage** — tokens stored securely in your OS keyring (macOS Keychain, Windows Credential Manager, Linux Secret Service) when available; on headless systems (CI/CD, Docker, WSL2), credentials are stored in a local file with restricted permissions
 - **Shell completion** — press Tab to auto-complete commands, options, profile names, project/space keys
 - **Interactive REPL** — run `atlassian-cli` with no arguments for a persistent interactive prompt
 - **Batch PR monitoring** — check multiple pull requests at once
 - **JSON + human output** — `--json` for scripting, readable tables by default
 - **JMESPath filtering** — `--filter` to extract exactly the fields you need
 - **Cross-platform** — Linux, macOS, Windows (native and WSL2)
-- **License tiers** — Trial (14 days, all features), Solo, Team, Business
+- **License tiers** — Free trial (14 days, all features), Solo ($9/mo), Team ($15/mo per seat)
 
 ## Quick Start
 
