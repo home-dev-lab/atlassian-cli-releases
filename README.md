@@ -9,7 +9,7 @@ No Python, no runtime, no dependencies — just download and run.
 
 ## Features
 
-- **145+ commands** across Jira, Confluence, and Bitbucket — **962 tests**
+- **150+ commands** across Jira, Confluence, and Bitbucket — **1325+ tests**
 - **Cross-service workflows** — `dashboard`, `link-page`, `pr-transition`, `sprint-report`, `release-notes`
 - **Named profiles** — switch between multiple sites or accounts with `--profile`
 - **OAuth 2.0 (3LO)** — browser-based login with secure PKCE flow and automatic token refresh
@@ -257,7 +257,7 @@ Full tab completion is built in — the same completions as the shell setup abov
 | Service | Commands | Highlights |
 |---------|----------|------------|
 | **Jira** | 55+ | Issues, sprints, boards, transitions, comments, attachments, worklogs, epics, filters, bulk ops, SLA |
-| **Confluence** | 39+ | Pages, spaces, comments (inline + footer), labels, attachments, restrictions, export PDF/Word |
+| **Confluence** | 43+ | Pages, spaces, comments (inline + footer, with `resolutionStatus` open/reopened/resolved), content properties, labels, attachments, restrictions, export PDF/Word, hybrid inline-comment reanchoring (`--reanchor-map` + `--orphan-strategy=auto`: manual + LCS + footer fallback) |
 | **Bitbucket** | 30+ | PRs (+ default reviewers, comments, tasks), batch PR status (multi-repo, conflict detection), pipelines (trigger, rerun), branches, commits, repos, clone |
 | **Cross-service** | 5 | dashboard, link-page, pr-transition, sprint-report, release-notes |
 | **Auth** | 12 | setup, status, check, profiles, switch, login, refresh, logout, keyring store/remove/status/migrate |
@@ -361,7 +361,7 @@ atlassian-cli bitbucket pipelines rerun myws/myrepo 315
 | `--json` | JSON output for scripting or piping to other tools |
 | `--profile NAME` | Use a named credential profile |
 | `--site NAME` | Override site (e.g. `mycompany` → `mycompany.atlassian.net`) |
-| `--verbose` / `-v` | Enable debug logging (useful for troubleshooting) |
+| `--verbose` / `-v` | Enable debug logging and upstream response body preview on errors |
 | `--version` | Show the installed version |
 
 Use `--help` on any command to see all available options:
