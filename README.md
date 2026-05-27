@@ -327,6 +327,35 @@ atlassian-cli bitbucket pr resolve-task myws/myrepo 42 --all
 atlassian-cli bitbucket pr unresolve-task myws/myrepo 42 --task-id 99
 ```
 
+### PR Reviewers
+
+Manage reviewers on an existing PR (list/add/set/remove). Internally does GET-then-PUT, preserving `title` / `description` / `destination` — mitigates the Bitbucket footgun where omitted fields on PUT are silently cleared and `title` is required.
+
+```bash
+# List current reviewers
+atlassian-cli bitbucket pr reviewers list myws/myrepo 42
+
+# Add reviewers (union with existing list, no-op on duplicates)
+atlassian-cli bitbucket pr reviewers add myws/myrepo 42 -r '{uuid-1}' -r '{uuid-2}'
+atlassian-cli bitbucket pr reviewers add myws/myrepo 42 --default-reviewers      # merge repo defaults in
+
+# Replace the entire list (empty input clears all reviewers)
+atlassian-cli bitbucket pr reviewers set myws/myrepo 42 -r '{uuid-1}'
+atlassian-cli bitbucket pr reviewers set myws/myrepo 42                          # clears all
+atlassian-cli bitbucket pr reviewers set myws/myrepo 42 --default-reviewers      # replace with repo defaults
+
+# Remove specific reviewers (no-op for UUIDs not present)
+atlassian-cli bitbucket pr reviewers remove myws/myrepo 42 -r '{uuid-1}'
+```
+
+Info messages (`added:`, `removed:`, `info: ... skipped`) go to stderr; JSON PR dict to stdout.
+
+Common 400 `Malformed reviewers list` (Bitbucket server-side validation, not body shape):
+- target user not directly granted on the repo (workspace membership alone is not enough)
+- target user account inactive/deactivated
+- target user is the PR author (self-review is forbidden)
+- UUID format invalid (must be 36-char hex with curly braces)
+
 ### PR Creation
 
 ```bash
