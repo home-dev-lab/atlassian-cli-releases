@@ -9,7 +9,7 @@ No Python, no runtime, no dependencies — just download and run.
 
 ## Features
 
-- **150+ commands** across Jira, Confluence, and Bitbucket — **1325+ tests**
+- **150+ commands** across Jira, Confluence, and Bitbucket — **1550+ tests**
 - **Cross-service workflows** — `dashboard`, `link-page`, `pr-transition`, `sprint-report`, `release-notes`
 - **Named profiles** — switch between multiple sites or accounts with `--profile`
 - **OAuth 2.0 (3LO)** — browser-based login with secure PKCE flow and automatic token refresh
@@ -284,6 +284,38 @@ atlassian-cli release-notes --project PROJ --version "1.2.0" --space DEV --dry-r
 
 All workflow commands support: `--dry-run` (preview only), `--update` (update if page exists),
 `--target-profile` (write to a different site), `--filter` (JMESPath output filtering).
+
+### Jira Markdown / ADF Support
+
+Jira Cloud's v3 REST API uses Atlassian Document Format (ADF) — a JSON tree — for issue descriptions, comments, worklogs, and transition comments. The CLI accepts plain Markdown anywhere ADF is expected and converts on the fly. Need a raw ADF payload (e.g. for layouts, panels, or content unsupported by Markdown)? Each write command exposes a `--*-adf` escape hatch.
+
+```bash
+# Create / update issues — Markdown description (default) or raw ADF
+atlassian-cli jira create -p PROJ -s "Fix the login bug" -d "## Steps to reproduce..."
+atlassian-cli jira update PROJ-123 --fields '{"description": "## Updated **steps**"}'
+atlassian-cli jira create -p PROJ -s "Custom layout" --description-adf adf-payload.json
+atlassian-cli jira epic-create -p PROJ -s "Q3 Migration" --description-adf epic-body.json
+
+# Comments — Markdown body (default) or raw ADF
+atlassian-cli jira comment add PROJ-123 -b "Looks good, **shipping** today."
+atlassian-cli jira comment edit PROJ-123 --comment-id 12345 -b "Edited body"
+atlassian-cli jira comment add PROJ-123 --body-adf comment-payload.json
+
+# Worklog comment — Markdown (default) or raw ADF
+atlassian-cli jira worklog add PROJ-123 --time-spent "1h30m" --comment "Investigation + fix"
+atlassian-cli jira worklog add PROJ-123 --time-spent "2h" --comment-adf worklog-comment.json
+
+# Transition with a comment — Markdown (default) or raw ADF
+atlassian-cli jira transition PROJ-123 --transition-id 31 --comment "Done, see PR #42"
+atlassian-cli jira transition PROJ-123 --transition-id 31 --comment-adf transition-note.json
+
+# Batch create — per-item Markdown description (auto-converts) or per-item ADF dict (passes through)
+atlassian-cli jira batch-create --body batch-issues.json
+
+# Read paths — Markdown rendering of ADF content
+atlassian-cli jira get PROJ-123 --convert-to-markdown
+atlassian-cli jira worklog list PROJ-123 --convert-to-markdown
+```
 
 ### Batch PR Status
 
