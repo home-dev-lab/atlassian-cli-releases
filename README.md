@@ -258,8 +258,8 @@ Full tab completion is built in — the same completions as the shell setup abov
 |---------|----------|------------|
 | **Jira** | 55+ | Issues, sprints, boards, transitions, comments, attachments, worklogs, epics, filters, bulk ops, SLA |
 | **Confluence** | 43+ | Pages, spaces, comments (inline + footer, with `resolutionStatus` open/reopened/resolved), content properties, labels, attachments, restrictions, export PDF/Word, hybrid inline-comment reanchoring (`--reanchor-map` + `--orphan-strategy=auto`: manual + LCS + footer fallback) |
-| **Bitbucket** | 30+ | PRs (+ default reviewers, comments, tasks), batch PR status (multi-repo, conflict detection), pipelines (trigger, rerun), branches, commits, repos, clone |
-| **Cross-service** | 5 | dashboard, link-page, pr-transition, sprint-report, release-notes |
+| **Bitbucket** | 30+ | PRs (+ default reviewers, comments, tasks, **`my-reviews` workspace-wide reviewer listing** with 24h cache + bounded-concurrency fan-out), batch PR status (multi-repo, conflict detection), pipelines (trigger, rerun), branches, commits, repos, clone |
+| **Cross-service** | 5 | dashboard (`--role author\|reviewer\|all`), link-page, pr-transition, sprint-report, release-notes |
 | **Auth** | 12 | setup, status, check, profiles, switch, login, refresh, logout, keyring store/remove/status/migrate |
 
 ### Cross-Service Workflows
@@ -267,6 +267,8 @@ Full tab completion is built in — the same completions as the shell setup abov
 ```bash
 # My work dashboard — open issues, recent PRs, unread activity
 atlassian-cli dashboard
+atlassian-cli dashboard --role reviewer   # PRs awaiting my review (24h cache)
+atlassian-cli bitbucket pr my-reviews     # standalone reviewer-PR listing
 
 # Create a Confluence page from a Jira issue
 atlassian-cli link-page PROJ-123 --space DEV
