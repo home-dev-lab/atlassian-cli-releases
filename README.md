@@ -9,7 +9,7 @@ No Python, no runtime, no dependencies — just download and run.
 
 ## Features
 
-- **150+ commands** across Jira, Confluence, and Bitbucket — **1550+ tests**
+- **150+ commands** across Jira, Confluence, and Bitbucket — **1690+ tests**
 - **Cross-service workflows** — `dashboard`, `link-page`, `pr-transition`, `sprint-report`, `release-notes`
 - **Named profiles** — switch between multiple sites or accounts with `--profile`
 - **OAuth 2.0 (3LO)** — browser-based login with secure PKCE flow and automatic token refresh
